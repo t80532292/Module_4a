@@ -503,9 +503,50 @@ var foodTrucks = [
 	}
 ];
 
+var _ = require('underscore');
+
 // this module should support the following methods:
 // getTrucks() - return all trucks
+function getTrucks() {
+	return foodTrucks;
+};
+
 // getTruck(name) - return the truck object matching 'name'
+function getTruck(name) {
+	var foundTrucks = _.find(foodTrucks, function(truck) {
+		return truck.name === name;
+	});
+
+	return foundTrucks;
+};
+
 // getFoodTypes() - return unique list of all associated food types (underscore has a function to help)
+function getFoodTypes() {
+	var masterList = _.map(foodTrucks, function(truck) {
+		return truck.type;
+	});
+	var flattenList = _.flatten(masterList);
+	var uniqList = _.uniq(flattenList);
+
+	return uniqList;
+};
+
 // filterByDay(day) - return trucks with 'day' in schedule (use your filterByDay function from Module 3 homework)
 // filterByFoodType(foodType) - return trucks with associated 'foodType'
+function filterByFoodType(type) {
+	var truckWithFoodType = _.filter(foodTrucks, function(truck) {
+		return _.contains(truck.type, type);
+	});
+
+	return truckWithFoodType;
+}
+
+;
+
+
+module.exports = {
+	getTrucks : getTrucks,
+	getTruck  : getTruck,
+	getFoodTypes : getFoodTypes,
+	filterByFoodType : filterByFoodType
+}
